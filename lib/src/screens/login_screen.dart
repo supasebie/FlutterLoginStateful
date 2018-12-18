@@ -29,6 +29,17 @@ class LoginScreenState extends State<LoginScreen> {
 
   Widget emailField(){
     return TextFormField(
+      validator: (String value) {
+        // Return null if valid
+        // Otherwise string with error message if invalid
+        if (!value.contains('@'))
+        {
+          return 'Please enter a valid email';
+        }
+        else {
+          return null; // Not neccesary
+        }
+      },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(  
         labelText: 'Email Address',
@@ -39,6 +50,12 @@ class LoginScreenState extends State<LoginScreen> {
 
   Widget passwordField(){
     return TextFormField(
+      validator: (String value) {
+        if(value.length < 4)
+        {
+          return 'Password must be at least 4 characters';
+        }
+      },
       obscureText: true,
       decoration: InputDecoration(  
         labelText: 'Password',
@@ -50,10 +67,9 @@ class LoginScreenState extends State<LoginScreen> {
   Widget submitButton(){
     return RaisedButton(
       onPressed: () {
-        formKey.currentState.reset();
+        print(formKey.currentState.validate());
       },
       child: Text("Submit"),
     );
   }
 }
-
