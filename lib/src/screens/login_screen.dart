@@ -9,6 +9,9 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
 
+  String email = "";
+  String password = "";
+
   Widget build(context) {
     return Container(
       margin: EdgeInsets.all(20.0),
@@ -29,6 +32,9 @@ class LoginScreenState extends State<LoginScreen> {
 
   Widget emailField(){
     return TextFormField(
+      onSaved: (String value) {
+        email = value;
+      },
       validator: (String value) {
         // Return null if valid
         // Otherwise string with error message if invalid
@@ -50,6 +56,9 @@ class LoginScreenState extends State<LoginScreen> {
 
   Widget passwordField(){
     return TextFormField(
+      onSaved: (String value) {
+        password = value;
+      },
       validator: (String value) {
         if(value.length < 4)
         {
@@ -67,7 +76,11 @@ class LoginScreenState extends State<LoginScreen> {
   Widget submitButton(){
     return RaisedButton(
       onPressed: () {
-        print(formKey.currentState.validate());
+        if (formKey.currentState.validate())
+        {
+        formKey.currentState.save();
+        print('This is your $email and this is your $password');
+        }
       },
       child: Text("Submit"),
     );
